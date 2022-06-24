@@ -29,7 +29,7 @@ for file in files :
         cv2.imwrite( OutputDirectory + file_name , create )
 
     else:
-        print( "skip : マスク画像と読み込んだ画像の縦横が違います。" )
+        print( "skip : plz check your mask size" )
 
 
 
