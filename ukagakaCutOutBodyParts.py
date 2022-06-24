@@ -19,27 +19,17 @@ if not os.path.exists( OutputDirectory ) :
 
 files = glob.glob( ReadFileDirectory + "/*.png" )
 mask = cv2.imread( ReadMaskFile , cv2.IMREAD_UNCHANGED )
+
+
 for file in files :
-
     img  = cv2.imread( file , cv2.IMREAD_UNCHANGED)
-    #img = cv2.imread( file , cv2.IMREAD_COLOR)
-    #ch_Blue, ch_Green, ch_Red , ch_Alpha = cv2.split(img[:,:,:4])
+    if img.shape == mask.shape :
+        create = cv2.bitwise_and( img , mask )
+        file_name = os.path.basename( file )
+        cv2.imwrite( OutputDirectory + file_name , create )
 
-    #ch_a = cv2.inRange(img, ( blue , green , red) , ( blue , green , red ) )
-    #dst = cv2.merge((ch_Blue, ch_Green, ch_Red, cv2.bitwise_not(ch_a)))
-    #cv2.imwrite( "./" + OutputDirectory + "/" + file_name , dst )
-
-    create = cv2.bitwise_and( img , mask )
-    #cv2.imshow( 'image' , create )
-    #cv2.waitKey(0)
-    #cv2.destroyAllWindows()
-    file_name = os.path.basename( file )
-    cv2.imwrite( OutputDirectory + file_name , create )
-
-
-
-
-
+    else:
+        print( "skip : マスク画像と読み込んだ画像の縦横が違います。" )
 
 
 
